@@ -398,6 +398,13 @@ ORT_API_STATUS_IMPL(EvalStep, _Inout_ OrtTrainingSession* session, _In_opt_ cons
 
 ORT_API_STATUS_IMPL(OptimizerStep, _Inout_ OrtTrainingSession* session, _In_opt_ const OrtRunOptions* run_options);
 
+ORT_API_STATUS_IMPL(SetLearningRate, _Inout_ OrtTrainingSession* session, float learning_rate);
+
+ORT_API_STATUS_IMPL(RegisterLinearLRScheduler, _Inout_ OrtTrainingSession* sess, _In_ int64_t warmup_step_count,
+                    _In_ int64_t total_step_count);
+
+ORT_API_STATUS_IMPL(SchedulerStep, _Inout_ OrtTrainingSession* sess);
+
 ORT_API_STATUS_IMPL(LoadCheckpoint, _In_ const ORTCHAR_T* checkpoint_path, _Outptr_ OrtCheckpointState** checkpoint_state);
 
 ORT_API_STATUS_IMPL(SaveCheckpoint, _In_ const ORTCHAR_T* checkpoint_path, _Inout_ OrtTrainingSession* session,

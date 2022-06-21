@@ -21,6 +21,14 @@ TrainingSession::TrainingSession(const Environment& session_env,
                            session_options, session_env, providers)
                      : std::unique_ptr<Optimizer>()} {}
 
+Status TrainingSession::RegisterScheduler(const std::function<
+                                          std::unique_ptr<LRSchedulerBase>(std::shared_ptr<Optimizer>)>& get_scheduler) {
+  scheduler_ = std::move(get_scheduler(optimizer_));
+  ORT_ENFORCE(scheduler_, "The provided instance of the learning rate scheduler is a nullptr.");
+
+  return Status::OK();
+}
+
 size_t TrainingSession::GetTrainModeOutputCount() const noexcept {
   return module_->GetTrainModeOutputCount();
 }
@@ -47,6 +55,16 @@ Status TrainingSession::ResetGrad() {
 
 Status TrainingSession::OptimizerStep(const RunOptions&) {
   return optimizer_->Step();
+}
+
+Status TrainingSession::SetLearningRate(float learning_rate) noexcept {
+  ORT_RETURN_IF_ERROR(optimizer_->SetLearningRate(learning_rate));
+
+  return Status::OK();
+}
+
+Status TrainingSession::SchedulerStep() {
+  return scheduler_->Step();
 }
 
 Status TrainingSession::CreateCheckpointState(CheckpointState& chkpt_state, bool save_optimizer_state) {

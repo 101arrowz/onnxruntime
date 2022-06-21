@@ -31,8 +31,15 @@ ORT_API2_STATUS(EvalStep, _Inout_ OrtTrainingSession* sess, _In_opt_ const OrtRu
                 size_t inputs_len, _In_reads_(inputs_len) const OrtValue* const* inputs,
                 size_t outputs_len, _Inout_updates_all_(outputs_len) OrtValue** outputs);
 
+ORT_API2_STATUS(SetLearningRate, _Inout_ OrtTrainingSession* sess, _In_ float learning_rate);
+
 ORT_API2_STATUS(OptimizerStep, _Inout_ OrtTrainingSession* sess,
                 _In_opt_ const OrtRunOptions* run_options);
+
+ORT_API2_STATUS(RegisterLinearLRScheduler, _Inout_ OrtTrainingSession* sess, _In_ int64_t warmup_step_count,
+                _In_ int64_t total_step_count);
+
+ORT_API2_STATUS(SchedulerStep, _Inout_ OrtTrainingSession* sess);
 
 ORT_CLASS_RELEASE(TrainingSession);
 ORT_CLASS_RELEASE(CheckpointState);

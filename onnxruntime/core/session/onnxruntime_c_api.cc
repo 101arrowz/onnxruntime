@@ -2537,7 +2537,10 @@ static constexpr OrtApi ort_api_1_to_12 = {
     &OrtApis::ResetGrad,
     &OrtApis::TrainStep,
     &OrtApis::EvalStep,
+    &OrtApis::SetLearningRate,
     &OrtApis::OptimizerStep,
+    &OrtApis::RegisterLinearLRScheduler,
+    &OrtApis::SchedulerStep,
     &OrtApis::ReleaseTrainingSession,
     &OrtApis::ReleaseCheckpointState,
 #endif
