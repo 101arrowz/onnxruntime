@@ -17,6 +17,7 @@
     "pretty": true,
     "allowUnreachableCode": false,
     "incremental": true,
-    "newLine": "LF"
+    "newLine": "LF",
+    "skipLibCheck": true
   }
 }
